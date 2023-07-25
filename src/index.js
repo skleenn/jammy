@@ -28,7 +28,7 @@ const rest = new REST({version: '10'}).setToken(config.token);
     try{
         console.log(`started refreshing ${commands.length} application (/) commands.`);
         const data = await rest.put(
-            Routes.applicationGuildCommands(config.clientID, guildID), //guildID may make an error, either delete it or copy past ur test server guild id
+            Routes.applicationGuildCommands(config.clientID, "1110334235505598617"), //guildID may make an error, either delete it or copy past ur test server guild id
             {body:commands},
         );
         console.log(`successfully reloaded ${data.length} application (/) commands.`);
