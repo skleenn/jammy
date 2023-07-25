@@ -1,4 +1,6 @@
 {
+  "name": "jammy",
+  "main": "index.js",
   "dependencies": {
     "discord.js": "^14.11.0"
   }
