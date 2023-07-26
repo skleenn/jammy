@@ -1,6 +1,12 @@
-const { Client, GatewayIntentBits, Collection} = require("discord.js");
+const { Client, GatewayIntentBits, Collection, ClientApplication} = require("discord.js");
 const {REST} = require("@discordjs/rest");
 const {Routes} = require("discord-api-types/v9");
+const { Manager } = require("erela.js");
+const { ErelaClient } = require("erela.js");
+const Spotify = require("erela.js-spotify");
+
+const clientid = "334d81c7cafb482ca840de440de2a167";
+const clientsecret = "d010a39d6b54494ba4b34613bce702a8";
 const config = require('./data/config.json');
 const fs = require('node:fs');
 const path = require('node:path');
@@ -38,7 +44,8 @@ const rest = new REST({version: '10'}).setToken(config.token);
 }) ();
 
 client.once("ready", () => {
-    console.log("jammys jammin!")
+    console.log("jammys jammin!");
+    client.manager.init(client.user.id)
 })
 
 client.on("interactionCreate", (interaction) => {
@@ -52,6 +59,31 @@ client.on("interactionCreate", (interaction) => {
         interaction.reply({content: "there was an error while executing this command.", ephemeral:true})
     }
 })
+
+const nodes = [
+    {
+        host: lavalink1.snooby.ml,
+        port: 443,
+        password: "discord.gg/6xpF6YqVDd",
+        secure: true,
+    }
+]
+
+const manager = new Manager({
+    plugins: [
+        new Spotify({
+            clientid,
+            clientsecret
+        })
+    ]
+});
+
+client.manager.on("nodeError", (node, error) => {
+    console.log(`Node "${node.options.identifier}" encountered an error: ${error.message}.`)
+})
+
+client.on("raw", d => client.manager.updateVoiceState(d));
+
 
 client.login(config.token)
 

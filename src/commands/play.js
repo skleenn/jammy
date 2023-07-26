@@ -1,23 +1,14 @@
 const { SlashCommandBuilder } = require("discord.js");
 const { Manager } = require("erela.js");
 const Spotify = require("erela.js-spotify");
+const { ErelaClient } = require("erela.js");
 
-const clientid = "334d81c7cafb482ca840de440de2a167";
-const clientsecret = "d010a39d6b54494ba4b34613bce702a8";
-
-const manager = new Manager({
-    plugins: [
-        new Spotify({
-            clientid,
-            clientsecret
-        })
-    ]
-});
 
 module.exports = {
     data: new SlashCommandBuilder()
         .setName("play")
-        .setDescription("plays a song"),
+        .setDescription("plays a song")
+        .addStringOption(option => option.setName("url").setDescription("enter spotify url of song!!")),
 
         async execute(client, interaction){
             
